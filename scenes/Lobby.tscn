@@ -1,0 +1,69 @@
+[gd_scene load_steps=6 format=3]
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_podium"]
+top_radius = 2.5
+bottom_radius = 2.8
+height = 0.5
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_podium"]
+albedo_color = Color(0.12, 0.16, 0.18, 1)
+metallic = 0.8
+roughness = 0.3
+emission_enabled = true
+emission = Color(0, 0.8, 1, 1)
+emission_energy_multiplier = 0.2
+
+[sub_resource type="Environment" id="Environment_lobby"]
+background_mode = 1
+background_color = Color(0.06, 0.1, 0.12, 1)
+ambient_light_source = 2
+ambient_light_color = Color(0.15, 0.2, 0.22, 1)
+glow_enabled = true
+glow_intensity = 0.9
+glow_bloom = 0.3
+
+[node name="Lobby" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_lobby")
+
+[node name="Podium" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.25, 0)
+mesh = SubResource("CylinderMesh_podium")
+surface_material_override/0 = SubResource("StandardMaterial3D_podium")
+
+[node name="KeySpotLight" type="SpotLight3D" parent="."]
+transform = Transform3D(0.866, -0.25, 0.433, 0, 0.866, 0.5, -0.5, -0.433, 0.75, 2.5, 4.5, 3.5)
+light_color = Color(1, 0.95, 0.88, 1)
+light_energy = 4.5
+spot_range = 10.0
+spot_angle = 35.0
+
+[node name="RimSpotLight" type="SpotLight3D" parent="."]
+transform = Transform3D(-0.866, 0, -0.5, 0, 1, 0, 0.5, 0, -0.866, -2, 3, -3)
+light_color = Color(0, 0.9, 1, 1)
+light_energy = 5.0
+spot_range = 8.0
+spot_angle = 45.0
+
+[node name="LobbyCamera" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.966, 0.259, 0, -0.259, 0.966, 0, 1.6, 3.8)
+current = true
+fov = 60.0
+
+[node name="LobbyUI" type="CanvasLayer" parent="."]
+
+[node name="DeployButton" type="Button" parent="LobbyUI"]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -320.0
+offset_top = -110.0
+offset_right = -45.0
+offset_bottom = -45.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_font_sizes/font_size = 26
+text = "DEPLOY NOW ↗"
