@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#101a1d" />
+  <meta name="description" content="Last Frontier — an original, single-player 3D survival battle royale. Drop in, gear up, and outlast the storm." />
+  <link rel="icon" href="/icon.svg" type="image/svg+xml" />
+  <title>LAST FRONTIER — Battle Royale</title>
+  <link rel="stylesheet" href="/src/style.css" />
+</head>
+<body>
+  <canvas id="game-canvas" aria-label="3D battle royale arena"></canvas>
+  <div class="cinematic-grain"></div>
+  <div id="loading"><span class="brand-mark">LF</span><p>BUILDING YOUR BATTLEGROUND<span class="loading-dots">...</span></p></div>
+  <div id="fatal" hidden><h1>Unable to start the renderer</h1><p id="fatal-message"></p><p>Try a current browser with WebGL 2 and hardware acceleration enabled.</p></div>
+  <div id="lobby" class="screen">
+    <header class="topbar">
+      <a class="brand" href="/" aria-label="Last Frontier home"><span class="brand-mark">LF</span><span>LAST<span class="brand-light">FRONTIER</span><small>BATTLE ROYALE</small></span></a>
+      <nav aria-label="Main navigation"><button class="nav-tab active" data-panel="play">PLAY</button><button class="nav-tab" data-panel="guide">FIELD MANUAL</button><button class="nav-tab" data-panel="settings">SETTINGS</button></nav>
+      <div class="profile"><span class="connection-dot"></span><span>LOCAL OPERATIVE<small>OFFLINE · SOLO VS BOTS</small></span><span class="avatar">01</span></div>
+    </header>
+    <main id="play-panel" class="lobby-content">
+      <section class="hero-copy">
+        <div class="eyebrow"><span></span> OPERATION: DUST HORIZON</div>
+        <h1>ONE ZONE.<br />ONE <em>SURVIVOR.</em></h1>
+        <p class="hero-description">No second chances. No backup.<br />Just you, your instincts, and the last circle.</p>
+        <div class="world-tags"><span><i class="tiny-square"></i> OPEN WORLD</span><span>3D COMBAT</span><span>16 OPERATIVES</span></div>
+        <div class="briefing"><span class="briefing-icon">↗</span><div><small>YOUR MISSION</small><p>Loot. Adapt. Be the last one standing.</p></div></div>
+      </section>
+      <div class="operator-label"><span class="label-line"></span><small>RECON UNIT / 01</small><strong>THE PATHFINDER</strong><span>READY FOR DEPLOYMENT</span></div>
+      <aside class="deploy-panel">
+        <div class="section-kicker"><span class="live-dot"></span> BATTLEGROUND <span class="index">01 / 01</span></div>
+        <div class="map-card"><svg viewBox="0 0 320 160" aria-hidden="true"><defs><pattern id="mapgrid" width="20" height="20" patternUnits="userSpaceOnUse"><path d="M 20 0 L 0 0 0 20" fill="none" stroke="#b8c6ab" stroke-opacity=".12"/></pattern></defs><rect width="320" height="160" fill="#344846"/><path d="M-10 125 Q60 30 150 80 T340 15 M-10 145 Q60 50 150 100 T340 35 M-10 105 Q60 10 150 60 T340 -5" fill="none" stroke="#91a08b" stroke-opacity=".24" stroke-width="2"/><path d="M0 80 L70 95 L125 35 L215 65 L320 30 M110 160 L125 35" fill="none" stroke="#ceb98c" stroke-opacity=".45" stroke-width="4"/><g fill="#78908a" transform="rotate(20 170 80)"><rect x="145" y="60" width="23" height="15"/><rect x="177" y="57" width="32" height="21"/><rect x="151" y="85" width="43" height="18"/></g><rect width="320" height="160" fill="url(#mapgrid)"/><circle cx="165" cy="80" r="52" fill="none" stroke="#e9c478" stroke-dasharray="4 4"/><circle cx="165" cy="80" r="5" fill="#e9c478"/><path d="M165 68 V57 M165 92 V103 M153 80 H142 M177 80 H188" stroke="#e9c478"/></svg><div class="map-overlay"><span class="map-tag">CLASSIC</span><h2>THE BADLANDS</h2><p>Arid frontier · 360 × 360 m</p></div></div>
+        <div class="match-options"><div><small>GAME MODE</small><strong>SOLO <span>vs AI</span></strong></div><span class="option-divider"></span><div><small>PERSPECTIVE</small><strong>TPP <span>3rd person</span></strong></div></div>
+        <div class="loadout"><span class="loadout-icon">⌁</span><div><small>STARTER LOADOUT</small><strong>AR-4 <span>· 5.56 mm</span></strong></div><span class="loadout-check">✓</span></div>
+        <button id="deploy" class="primary-button"><span>DEPLOY NOW</span><span class="button-arrow">↗</span></button>
+        <p class="deploy-note"><span class="connection-dot"></span> INSTANT DEPLOYMENT · NO DOWNLOAD</p>
+      </aside>
+      <div class="bottom-intel"><div><span class="intel-number">01</span><p><small>STAY IN THE CIRCLE</small>The frontier waits for no one.</p></div><button id="quick-guide">HOW TO PLAY <span>↗</span></button></div>
+    </main>
+    <section id="guide-panel" class="modal-panel" hidden><div class="eyebrow">OPERATIVE HANDBOOK</div><h2>Know your battleground.</h2><p>Defeat 15 AI operatives and survive the closing zone. Blue supply cases restore ammo and medkits; gold cases upgrade your rifle. Walk close to collect them.</p><div class="guide-grid"><div><h3>01 / MOVE</h3><p><kbd>W A S D</kbd> to move<br /><kbd>SHIFT</kbd> to sprint · <kbd>SPACE</kbd> to jump</p></div><div><h3>02 / ENGAGE</h3><p>Mouse to look · Click to fire<br />Right click to aim · <kbd>R</kbd> to reload</p></div><div><h3>03 / SURVIVE</h3><p><kbd>H</kbd> to use a medkit<br /><kbd>ESC</kbd> to pause · <kbd>M</kbd> for sound</p></div><div><h3>04 / MOBILE</h3><p>Left stick to move. Drag the right side to look. Use the on-screen fire, aim, jump, reload and heal buttons.</p></div></div><p class="muted">The blue storm damages everyone outside it. Watch the minimap and use buildings for cover. Bot difficulty is adjustable in Settings.</p><button class="primary-button back-play">READY TO PLAY <span>↗</span></button></section>
+    <section id="settings-panel" class="modal-panel" hidden><div class="eyebrow">MAKE IT YOURS</div><h2>Field settings.</h2><label class="setting-row"><span>Render quality<small>4K renders up to 3840 × 2160 in landscape. GPU-dependent.</small></span><select id="quality"><option value="performance">Performance</option><option value="balanced" selected>Balanced</option><option value="ultra">Ultra / 4K</option></select></label><label class="setting-row"><span>Bot difficulty<small>Applies to your next deployment.</small></span><select id="difficulty"><option value="recruit">Recruit</option><option value="regular" selected>Regular</option><option value="veteran">Veteran</option></select></label><label class="setting-row"><span>Look sensitivity</span><input id="sensitivity" type="range" min="0.3" max="2" step="0.1" value="1" /></label><label class="setting-row"><span>Audio<small>Procedural combat and ambient sound.</small></span><input id="sound" type="checkbox" checked /></label><label class="setting-row"><span>Touch controls<small>Automatically enabled on touch devices.</small></span><input id="touch" type="checkbox" /></label><button class="primary-button back-play">SAVE & RETURN <span>↗</span></button></section>
+    <footer class="lobby-footer"><span><i class="tiny-square"></i> FRONTIER PROTOCOL <b>v1.0</b></span><span>ORIGINAL INDIE PROTOTYPE <i> / </i> BUILT TO SURVIVE</span><button id="fullscreen" aria-label="Toggle fullscreen">⛶ FULLSCREEN</button></footer>
+  </div>
+  <div id="hud" hidden>
+    <div class="match-stats"><span>ALIVE <b id="alive">16</b></span><span>ELIMINATIONS <b id="kills">0</b></span></div>
+    <div class="compass"><span id="bearing">N &nbsp; 0°</span><div>· &nbsp; · &nbsp; | &nbsp; · &nbsp; · &nbsp; <b>▼</b> &nbsp; · &nbsp; · &nbsp; | &nbsp; · &nbsp; ·</div></div>
+    <div class="minimap-wrap"><canvas id="minimap" width="200" height="200" aria-label="Minimap showing your position, nearby enemies and safe zone"></canvas><span id="zone-label">ZONE CLOSES IN 00:45</span></div>
+    <button id="pause-button" aria-label="Pause game">Ⅱ</button>
+    <div id="killfeed"></div><div id="announcement"></div><div id="zone-warning" hidden>⚠ OUTSIDE SAFE ZONE — MOVE IN!</div>
+    <div id="crosshair"><i></i><i></i><i></i><i></i></div><div id="hitmarker">×</div><div id="damage-flash"></div>
+    <div id="scope-overlay" class="scope-overlay" hidden>
+      <div class="scope-mask">
+        <div class="scope-lens">
+          <div class="scope-crosshair-v"></div>
+          <div class="scope-crosshair-h"></div>
+          <div class="scope-chevron"></div>
+          <div class="scope-mils">
+            <span class="mil-tick" style="top:25%">100m</span>
+            <span class="mil-tick" style="top:40%">200m</span>
+            <span class="mil-tick" style="top:55%">300m</span>
+            <span class="mil-tick" style="top:70%">400m</span>
+          </div>
+          <div class="scope-rangefinder">
+            <div class="range-box">RANGE <b>150M</b></div>
+            <div class="elev-box">ELEV <b>+0.4 MIL</b></div>
+          </div>
+          <div class="scope-reflection"></div>
+        </div>
+      </div>
+    </div>
+    <div class="player-status">
+      <div class="status-heading"><span>PATHFINDER</span><span id="hp-number">100 HP · 100 AP</span></div>
+      <div class="armor-track"><div id="armor-bar"></div></div>
+      <div class="health-track"><div id="health-bar"></div></div>
+      <div class="status-foot"><span id="medkits">✚ 3 MEDKITS</span><span id="action-status">AR-4 READY</span></div>
+    </div>
+    <div class="weapon-status">
+      <button id="scope-badge" class="scope-badge" aria-label="Cycle scope optic">
+        <span class="scope-icon">🔭</span>
+        <span id="active-scope-name">1.8X HOLO</span>
+        <small>[V] CYCLE</small>
+      </button>
+      <small id="weapon-name">AR-4 / 5.56</small>
+      <div><b id="ammo">30</b><span> / <span id="reserve">150</span></span></div>
+      <small id="weapon-mode">AUTO <span>· R RELOAD · V SCOPE</span></small>
+    </div>
+    <div class="desktop-hint">WASD MOVE <i> / </i> CLICK FIRE <i> / </i> RIGHT CLICK ADS <i> / </i> V CYCLE SCOPE <i> / </i> SPACE / CLICK CUT CHUTE <i> / </i> R RELOAD</div>
+    <div id="touch-controls"><div id="joystick"><div id="joystick-knob"></div></div><div class="touch-actions"><button id="touch-aim" aria-label="Toggle aim">◎<small>AIM</small></button><button id="touch-scope" aria-label="Cycle scope optic">🔭<small>SCOPE</small></button><button id="touch-fire" aria-label="Fire weapon">⌖<small>FIRE</small></button><button id="touch-jump" aria-label="Jump">↑<small>JUMP</small></button><button id="touch-reload" aria-label="Reload weapon">↻<small>LOAD</small></button><button id="touch-heal" aria-label="Use medkit">✚<small>HEAL</small></button></div></div>
+  </div>
+  <div id="pause" class="overlay" hidden><div class="overlay-card"><div class="eyebrow">TAKE A BREATHER</div><h2>MISSION PAUSED</h2><p>Your match is saved in this session.<br />Return to the frontier when you're ready.</p><button id="resume" class="primary-button">RESUME MISSION <span>↗</span></button><button id="leave" class="secondary-button">RETURN TO LOBBY</button></div></div>
+  <div id="results" class="overlay" hidden><div class="overlay-card"><div id="result-kicker" class="eyebrow">MISSION COMPLETE</div><h2 id="result-title">LAST ONE STANDING.</h2><p id="result-copy"></p><div class="result-stats"><div><b id="result-place">#1</b><small>PLACEMENT</small></div><div><b id="result-kills">0</b><small>ELIMINATIONS</small></div><div><b id="result-time">0:00</b><small>SURVIVED</small></div></div><button id="redeploy" class="primary-button">DEPLOY AGAIN <span>↗</span></button><button id="result-lobby" class="secondary-button">RETURN TO LOBBY</button></div></div>
+  <div id="inventory-overlay" class="overlay" hidden>
+    <div class="overlay-card inventory-card">
+      <div class="eyebrow"><span></span> FIELD LOADOUT & BACKPACK</div>
+      <h2>TACTICAL INVENTORY</h2>
+      <div class="inventory-grid">
+        <div class="inventory-slot active-slot" id="slot-primary">
+          <small>PRIMARY [1]</small>
+          <strong id="inv-primary-name">AR-4 / 5.56</strong>
+          <span id="inv-primary-ammo">30 / 150</span>
+        </div>
+        <div class="inventory-slot" id="slot-secondary">
+          <small>SECONDARY [2]</small>
+          <strong id="inv-secondary-name">VECTOR-9 / 9MM</strong>
+          <span id="inv-secondary-ammo">33 / 132</span>
+        </div>
+        <div class="inventory-slot" id="slot-holster">
+          <small>SIDEARM [3]</small>
+          <strong id="inv-holster-name">P-9 SIDEARM</strong>
+          <span id="inv-holster-ammo">12 / 48</span>
+        </div>
+        <div class="inventory-slot">
+          <small>BODY ARMOR</small>
+          <strong id="inv-armor-status">LEVEL 3 VEST</strong>
+          <span id="inv-armor-points">100 AP</span>
+        </div>
+        <div class="inventory-slot">
+          <small>FIRST AID</small>
+          <strong id="inv-medkits">3 MEDKITS</strong>
+          <span>[H] TO HEAL</span>
+        </div>
+        <div class="inventory-slot">
+          <small>AMMO PACK</small>
+          <strong>5.56 & 9MM</strong>
+          <span>STANDARD LOADS</span>
+        </div>
+      </div>
+      <p class="muted">Press <kbd>TAB</kbd> or <kbd>ESC</kbd> to close. Press <kbd>1</kbd>, <kbd>2</kbd>, <kbd>3</kbd> to swap weapons.</p>
+      <button id="close-inventory" class="primary-button">RETURN TO COMBAT <span>↗</span></button>
+    </div>
+  </div>
+
+  <div id="map-overlay" class="overlay" hidden>
+    <div class="overlay-card map-fullscreen-card">
+      <div class="eyebrow"><span></span> SATELLITE TACTICAL GRID</div>
+      <h2>THE BADLANDS BATTLEGROUND</h2>
+      <div class="big-map-container">
+        <canvas id="big-map" width="420" height="420"></canvas>
+      </div>
+      <div class="map-legend">
+        <span><i class="dot player-dot"></i> YOU</span>
+        <span><i class="dot safe-dot"></i> SAFE ZONE</span>
+        <span><i class="dot storm-dot"></i> STORM</span>
+        <span><i class="dot crate-dot"></i> CRATE</span>
+      </div>
+      <p class="muted">Press <kbd>M</kbd> or <kbd>ESC</kbd> to return to combat.</p>
+      <button id="close-map" class="primary-button">RESUME RECON <span>↗</span></button>
+    </div>
+  </div>
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html>
