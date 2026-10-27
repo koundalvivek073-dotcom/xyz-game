@@ -28,6 +28,13 @@ npm run preview
 The production site is written to `dist/`. It is generated output and is not
 checked into Git.
 
+### Deploy to Vercel
+
+Import this repository in Vercel and deploy with the default project settings.
+The checked-in `vercel.json` configures Vite's production build and `dist/`
+output directory. Vercel will build and deploy the site on each push to the
+connected branch.
+
 ### Play
 
 Defeat 15 AI operatives and survive the shrinking storm. Find supply cases for
